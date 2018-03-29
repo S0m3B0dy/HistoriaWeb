@@ -1,0 +1,31 @@
+﻿html {
+    position: relative;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+body {
+    padding-top: 165px;
+    margin-bottom: 80px;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #004d79;
+    border-color: #E7E7E7;
+    min-height: 80px;
+}
+.navbar-brand {
+    padding: 0 15px;
+    height: 80px;
+    line-height: 80px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    /*height: 150px;*/
+    background-color: #002641;
+}

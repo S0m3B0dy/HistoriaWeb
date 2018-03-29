@@ -1,0 +1,155 @@
+﻿@model IEnumerable<Historia.Models.ProposalModel>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Historia.cshtml";
+}
+
+<link href="~/Content/jquery.upvote.css" rel="stylesheet" />
+
+<div class="container">
+    <h2>Proposals</h2>
+
+
+
+    <div class="row">
+        <div class="col-12">
+            <p>
+                <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#createProposalModal">Create Proposal</button>
+            </p>
+        </div>
+    </div>
+
+
+    @foreach (var item in Model)
+    {
+        <div class="row" style="padding-top:10px">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>@Html.DisplayFor(modelItem => item.ProposalName)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-1">
+                                <div id="topic" class="upvote">
+                                    <a class="upvote"></a>
+                                    <span class="count">0</span>
+                                    <a class="downvote"></a>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-2">
+                                        <strong>Proposed By: </strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <a href="#">@Html.DisplayFor(modelItem => item.ProposedByUserName)</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <strong>Description: </strong>
+                                    </div>
+                                    <div class="col-9">
+                                        @Html.DisplayFor(modelItem => item.ProposalDescription)
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <strong>Project URL: </strong>
+                                    </div>
+                                    <div class="col-9">
+                                        <a href="@Html.DisplayFor(modelItem => item.ProposalDescriptionUrl)">@Html.DisplayFor(modelItem => item.ProposalDescriptionUrl)</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <strong>Payment: </strong>
+                                    </div>
+                                    <div class="col-9">
+                                        @Html.DisplayFor(modelItem => item.PaymentAmount)
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-2">
+                                        <strong>Proposed On:</strong>
+                                    </div>
+                                    <div class="col-9">
+                                        @Html.DisplayFor(modelItem => item.PaymentDate)
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-11">
+                                        @Html.ActionLink("More Details", "Edit", new { id = item.Id }, new { @class = "pull-right" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">50%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+<!-- Modal -->
+<div class="modal fade" id="createProposalModal" tabindex="-1" role="dialog" aria-labelledby="settingsModalLabel" aria-hidden="true" style="max-width:500px">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong>Create Proposal</strong>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form id="mainForm" class="form-horizontal" role="form" action="">
+                    <div class="row">
+                        <div class="col-12 form-group" id="alert_placeholder__UNIQUEID__"></div>
+                    </div>
+                    <div class="row">
+
+                        <div class="row">
+                            <div class="col-6 form-group">
+                                <label for="cardNumber__UNIQUEID__">Card Number</label>
+                                <input type="text" class="form-control" id="cardNumber__UNIQUEID__" name="cardNumber__UNIQUEID__" value="__MASKEDCARDNUMBER__" required>
+                                <div class="invalid-feedback">You must enter a valid Card Number.</div>
+                            </div>
+                            <div class="col-6 form-group">
+                                <label for="nameOnAccount__UNIQUEID__">Name On Account</label>
+                                <input type="text" class="form-control" id="nameOnAccount__UNIQUEID__" name="nameOnAccount__UNIQUEID__" value="__NAMEONACCOUNT__" required>
+                                <div class="invalid-feedback">Please enter the Name on Account.</div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/jquery.upvote.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#topic').upvote();
+
+        });
+    </script>
+}

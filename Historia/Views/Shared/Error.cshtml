@@ -1,0 +1,27 @@
+﻿@using com.bfcusa.bfcResources.ResourceProviders
+@{
+    ViewBag.Title = LocalizationResourceProvider.Current.GetBusinessKeyString(ViewBag.BusinessKey, "Historia_Title");
+    Layout = "~/Views/Shared/_Historia.cshtml";
+    
+    if (ViewBag.BusinessKey == null)
+    {
+        ViewBag.BusinessKey = "BFC";
+    }    
+}
+<div class="container-fluid">
+    <input type="hidden" id="ReturnUrl" value="@ViewBag.ReturnUrl" />
+    <input type="hidden" id="SessionId" value="@ViewBag.SessionId" />
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <h3 class="card-header">@LocalizationResourceProvider.Current.GetBusinessKeyString(ViewBag.BusinessKey, "Historia_Error_PageHeader")</h3>
+                <div class="card-body">
+
+                    <div class="container" style="margin-top:20px;margin-bottom:20px;width:100%">
+                        @LocalizationResourceProvider.Current.GetBusinessKeyString(ViewBag.BusinessKey, "Historia_Error_ErrorMessage")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

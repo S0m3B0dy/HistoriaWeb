@@ -1,0 +1,15 @@
+﻿/*
+    Use this file for any styles that should be global to the entire site
+    If you have a specific style for a specific page, use the page's style section
+*/
+
+.borderTop_orange {
+    border-top: 1px solid #fbeed5 !important;
+}
+.paymentbox, .yellowbg {
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+}
+.paymentbox .greybg {
+    background-color: #fbfaf2 !important;
+}

@@ -1,0 +1,114 @@
+﻿@model Historia.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Historia.cshtml";
+}
+
+@section Styles {
+
+    <style>
+        .card-body {
+            background-color: #ffffff !important;
+        }
+    </style>
+}
+
+<section id="loginForm">
+    @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "needs-validation", @autocomplete = "off", novalidate = "novalidate" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 mx-auto">
+                            <div class="card rounded-0">
+                                <div class="card-header">
+                                    <h3 class="mb-0">Join Historia</h3>
+                                </div>
+                                <div class="card-body">
+
+                                    @if (ViewData.ModelState[""] != null && ViewData.ModelState[""].Errors.Count > 0)
+    {
+                                <div class="alert alert-danger">
+                                    <button type="button" class="close" data-dismiss="alert">×</button>
+                                    @Html.ValidationSummary(true, "Unable to create Historia account: ")
+                                </div>
+}
+
+                                    <div class="form-group">
+                                        <label for="tbUserName">Username</label>
+                                        @Html.TextBoxFor(m => m.UserName, new { id = "tbUserName", @class = "form-control", required = "required" })
+                                        <div class="invalid-feedback">Please enter your UserName.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tbPassword">Password</label>
+                                        @Html.PasswordFor(m => m.Password, new { id = "tbPassword", @class = "form-control", required = "required" })
+                                        <div class="invalid-feedback">Please enter your Password.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tbPassword">Confirm Password</label>
+                                        @Html.PasswordFor(m => m.ConfirmPassword, new { id = "tbConfirmPassword", @class = "form-control", required = "required" })
+                                        <div class="invalid-feedback">Please confirm Password.</div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tbEmailAddress">Email Address</label>
+                                        @Html.TextBoxFor(m => m.EmailAddress, new { id = "tbEmailAddress", @class = "form-control", required = "required" })
+                                        <div class="invalid-feedback">Please enter your Email Address.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="g-recaptcha" data-sitekey="6LdXIU4UAAAAACrpNa6WuRvFUbJ2VTxTA28qrrYT"></div>
+                                    </div>
+                                    <button name="register-submit" id="register-submit" class="btn btn-success btn-lg float-right" style="background-color:#EB941D">Register</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    }
+</section>
+
+@section Scripts {
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script type="text/javascript">
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        else {
+
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+
+
+
+    </script>
+}

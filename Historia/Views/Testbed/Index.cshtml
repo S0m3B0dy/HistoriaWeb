@@ -1,0 +1,142 @@
+﻿
+@{
+    ViewBag.Title = "Testbed";
+    Layout = "~/Views/Shared/_Historia.cshtml";
+}
+
+<link href="~/Content/jquery.upvote.css" rel="stylesheet" />
+
+<style>
+    .container-fluid {
+        height: 100%;
+        max-width: 1170px;
+    }
+</style>
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Development Testbed</h1>
+            <div class="card">
+                <div class="card-header">Test RPC Calls</div>
+                <div class="card-body">
+                    <form id="mainForm" class="form-horizontal" role="form" action="">
+                        <div class="row">
+                            <div class="col-lg-12 form-group" id="alert_placeholder__UNIQUEID__"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 form-group">
+                                <label for="hostIpAddress">Host IP Address</label>
+                                <input type="text" class="form-control" id="hostIpAddress" name="hostIpAddress" value="http://127.0.0.1:9999" required>
+                                <div class="invalid-feedback">You must enter the host IP Address.</div>
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="userName">User Name</label>
+                                <input type="text" class="form-control" id="userName" name="userName" value="darkcoind" required>
+                                <div class="invalid-feedback">You must enter a valid User Name.</div>
+                            </div>
+                            <div class="col-lg-3 form-group">
+                                <label for="password">Password</label>
+                                <input type="text" class="form-control" id="password" name="password" value="Abc123abc" required>
+                                <div class="invalid-feedback">You must enter a valid Password.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 form-group">
+                                <label for="userName">Method Name</label>
+                                <input class="form-control" id="methodName" name="methodName" value="getbalance" required>
+                                <div class="invalid-feedback">You must enter a valid Method Name.</div>
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <label for="userName">Parameters</label>
+                                <textarea class="form-control" id="callParameters" name="callParameters" style="height:150px">["payment","30"]</textarea>
+                                <div class="invalid-feedback">You must enter a valid Parameter.</div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 form-group">
+
+                            </div>
+                            <div class="col-lg-6 form-group">
+                                <button id="btnSubmit" type="submit" class="btn btn-primary pull-right" style="width:150px">Test Call</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">Test Output</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <textarea id="testOutput" name="testOutput" class="form-control" style="min-width: 100%; height:150px"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/Scripts/jquery.upvote.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#btnSubmit").click(function (event) {
+                //Fetch form to apply custom Bootstrap validation
+                var form = $("#mainForm")
+
+                if (form[0].checkValidity() === false) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                else {
+
+                    form.addClass('was-validated');
+
+                    var callDetails = {};
+                    callDetails.hostIPAddress = $('#hostIpAddress').val();
+                    callDetails.methodName = $('#methodName').val();
+                    callDetails.userName = $('#userName').val();
+                    callDetails.password = $('#password').val();
+                    callDetails.parameters = $('#callParameters').val();
+
+                    $.ajax({
+                        method: "POST",
+                        url: '@Url.Action("RunRPCTest", "Testbed")',
+                        data: "callDetails=" + JSON.stringify(callDetails),
+                        dataType: "json",
+                        contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                        success: function (data, status, jqXHR)
+                        {
+                            var d = new Date();
+
+                            console.log('data: ' + data.success + ' responseText: ' + data.responseText);
+                            $('#testOutput').val($('#testOutput').val() + d.toLocaleString() + ' - data: ' + data.success + ' responseText: ' + data.responseText + '\n');
+                            if (data.success)
+                            {
+                            
+                            }
+                        },
+                        error: function (jqXHR, status, err) {
+                            console.log(err);
+                            alert("Local error callback. " + err + " status - " + status);
+                        },
+                        complete: function (jqXHR, status) {
+                            console.log('status: ' + status);
+                            $(document.body).removeClass("loading");
+                       }
+                    });
+                    return false;
+                }
+                form.addClass('was-validated');
+            });
+        });
+
+
+    </script>
+}
